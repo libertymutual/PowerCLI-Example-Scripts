@@ -1,0 +1,81 @@
+{
+    "items": [
+        {
+            "computeProfileId": "00d4be02-3d7a-4c71-b164-a0d3b6abee07",
+            "name": "Mock Compute Profile",
+            "location": "20190321172122742-5699f9aa-4b67-4521-b9b3-7abf96806714",
+            "locationName": "mockhcxserver-enterprise",
+            "state": "VALID",
+            "compute": [
+                {
+                    "cmpId": "3CAF5E45-687B-404B-AFD1-3273E31190C3",
+                    "cmpName": "vcenter.vsphere.local",
+                    "cmpType": "VC",
+                    "type": "ClusterComputeResource",
+                    "id": "domain-c00",
+                    "name": "MockComputeContainer"
+                }
+            ],
+            "services": [
+                {
+                    "name": "INTERCONNECT"
+                },
+                {
+                    "name": "WANOPT"
+                },
+                {
+                    "name": "VMOTION"
+                },
+                {
+                    "name": "BULK_MIGRATION"
+                }
+            ],
+            "deploymentContainer": {
+                "compute": [
+                    {
+                        "cmpId": "3CAF5E45-687B-404B-AFD1-3273E31190C3",
+                        "cmpName": "vcenter.vsphere.local",
+                        "type": "ClusterComputeResource",
+                        "id": "domain-c00",
+                        "name": "MockComputeContainer"
+                    }
+                ],
+                "storage": [
+                    {
+                        "cmpId": "3CAF5E45-687B-404B-AFD1-3273E31190C3",
+                        "cmpName": "vcenter.vsphere.local",
+                        "type": "Datastore",
+                        "id": "datastore-00",
+                        "name": "MockDatastore"
+                    }
+                ]
+            },
+            "networks": [
+                {
+                    "id": "network-0a58f81b-ea5a-4348-bcc4-682f86dd5f1f",
+                    "name": "vmotion_network",
+                    "tags": [
+                        "vmotion"
+                    ],
+                    "staticRoutes": []
+                },
+                {
+                    "id": "network-4d0f5820-ab66-4093-8700-a9a4b6918706",
+                    "name": "management_network",
+                    "tags": [
+                        "management",
+                        "uplink",
+                        "replication"
+                    ],
+                    "staticRoutes": []
+                }
+            ],
+            "switches": [],
+            "lastTaskDetails": {
+                "interconnectTaskId": "c74b70c1-b0f0-4527-b386-943fdbeab76e",
+                "type": "computeProfileCreate",
+                "status": "SUCCESS"
+            }
+        }
+    ]
+}

@@ -1307,3 +1307,53 @@ Function Remove-HcxProxy {
         }
     }
 }
+Function Get-HcxComputeProfile {
+    <#
+        .NOTES
+        ===========================================================================
+        Created by:    Mark McGilly
+        Date:          4/16/2019
+        Organization:  Liberty Mutual Insurance
+        ===========================================================================
+    
+        .SYNOPSIS
+            Gets the HCX Compute Profile
+        .DESCRIPTION
+            
+        .EXAMPLE
+            PS> Get-HcxComputeProfile
+
+            computeProfileId    : 00d4be02-3d7a-4c71-b164-a0d3b6abee07
+            name                : Compute Profile
+            location            : 20190321172122742-5699f9aa-4b67-4521-b9b3-7abf96806714
+            locationName        : hcx-enterprise
+            state               : VALID
+            compute             : {@{cmpId=3CAF5E45-687B-404B-AFD1-3273E31190C3; cmpName=vcenter.vsphere.local; cmpType=VC; type=ClusterComputeResource; id=domain-c00; name=ComputeCluster}}
+            services            : {@{name=INTERCONNECT}, @{name=WANOPT}, @{name=VMOTION}, @{name=BULK_MIGRATION}}
+            deploymentContainer : @{compute=System.Object[]; storage=System.Object[]}
+            networks            : {@{id=network-0a58f81b-ea5a-4348-bcc4-682f86dd5f1f; name=vmotion_network; tags=System.Object[]; staticRoutes=System.Object[]}, @{id=network-4d0f5820-ab66-4093-8700-a9a4b6918706;
+                                name=management_network; tags=System.Object[]; staticRoutes=System.Object[]}}
+            switches            : {}
+            lastTaskDetails     : @{interconnectTaskId=c74b70c1-b0f0-4527-b386-943fdbeab76e; type=computeProfileCreate; status=SUCCESS}
+    #>    
+    [CmdletBinding()]
+    Param ()
+    
+    If (-Not $global:hcxConnection) { Write-error "HCX Auth Token not found, please run Connect-HcxServer " } Else {
+        $computeProfileUrl = $global:hcxConnection.Server + "/interconnect/computeProfiles"
+        Try {
+            if ($PSVersionTable.PSEdition -eq "Core") {
+                $computeProfileRequests = Invoke-WebRequest -Uri $computeProfileUrl -Method GET -Headers $global:hcxConnection.headers -UseBasicParsing -SkipCertificateCheck
+            }
+            else {
+                $computeProfileRequests = Invoke-WebRequest -Uri $computeProfileUrl -Method GET -Headers $global:hcxConnection.headers -UseBasicParsing
+            }
+
+            $computeProfiles = ($computeProfileRequests.content | ConvertFrom-Json -ErrorAction Stop ).items
+        }
+        Catch {
+            Throw "Unable to retrieve Compute Profiles"
+        }
+        $computeProfiles
+    }
+}
